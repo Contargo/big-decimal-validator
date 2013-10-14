@@ -17,6 +17,8 @@ import static org.hamcrest.CoreMatchers.is;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.hamcrest.text.IsEmptyString.isEmptyOrNullString;
+
 
 /**
  * Unittest of {@link BigDecimalConstraintValidator}.
@@ -42,205 +44,296 @@ public class BigDecimalValidatorUnitTest {
 
 
     @Test
-    public void validateMinDecimalPlaces() {
+    public void validateMaxDecimalPlacesBorder() {
 
-        bigDecimal = new BigDecimal("0.0");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
+        bigDecimal = new BigDecimal("0");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
+        isValid(result);
     }
 
 
     @Test
-    public void validateZeroZero() {
+    public void validateMaxDecimalPlacesOver() {
 
-        bigDecimal = new BigDecimal("0.00");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateZero() {
-
-        bigDecimal = new BigDecimal("0.0");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateTwoFractionals() {
-
-        bigDecimal = new BigDecimal("0.01");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validatePowerOf() {
-
-        bigDecimal = new BigDecimal("1E10");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).maxDecimalPlaces(12).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateOneFractionalBigEnough() {
-
-        bigDecimal = new BigDecimal("0.10");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).maxDecimalPlaces(3).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateOneFractionalAtMax() {
-
-        bigDecimal = new BigDecimal("0.1");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).maxDecimalPlaces(2).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateMaximum() {
-
-        bigDecimal = new BigDecimal("9999999999.99");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateMinimum() {
-
-        bigDecimal = new BigDecimal("9.99");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateMax() {
-
-        bigDecimal = new BigDecimal("100.05");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(3).minValue(0).maxValue(
-                100.05).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void validateMin() {
-
-        bigDecimal = new BigDecimal("4.32");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(1).minValue(4.32).maxValue(
-                100.05).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(true));
-    }
-
-
-    @Test
-    public void isNotValidFractional() {
-
-        bigDecimal = new BigDecimal("0.01");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(1).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
-    }
-
-
-    @Test
-    public void isNotValidWithoutFractional() {
-
-        bigDecimal = new BigDecimal("0.01");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(0).build();
-
-        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
-    }
-
-
-    @Test
-    public void isNotValidWithDecimalAndFractional() {
-
-        bigDecimal = new BigDecimal("100.01");
+        bigDecimal = new BigDecimal("0");
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(2).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
+        isValid(result);
     }
 
 
     @Test
-    public void isNotValidMax() {
+    public void validateMaxDecimalPlacesUnder() {
 
-        bigDecimal = new BigDecimal("100.06");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(3).minValue(0).maxValue(
-                100.05).build();
+        bigDecimal = new BigDecimal("10");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
+        isNotValid(result,
+            "The count of the digits before the point is out of range. It should be in the range 1 - 1 but is 2.");
     }
 
 
     @Test
-    public void isNotValidMin() {
+    public void validateMinDecimalPlacesBorder() {
+
+        bigDecimal = new BigDecimal("0");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(1).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMinDecimalPlacesOver() {
+
+        bigDecimal = new BigDecimal("100");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(4).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isNotValid(result,
+            "The count of the digits before the point is out of range. It should be in the range 4 - 10 but is 3.");
+    }
+
+
+    @Test
+    public void validateMinDecimalPlacesUnder() {
+
+        bigDecimal = new BigDecimal("100");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(2).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMaxFractionsBorder() {
+
+        bigDecimal = new BigDecimal("0.00");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(2).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMaxFractionsOver() {
+
+        bigDecimal = new BigDecimal("0.00");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(3).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMaxFractionsUnder() {
+
+        bigDecimal = new BigDecimal("0.00");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(1).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isNotValid(result,
+            "The count of the digits after the point is too high. It should be less than or equal to 1 but is 2.");
+    }
+
+
+    @Test
+    public void validateMinValueZeroBorder() {
+
+        bigDecimal = new BigDecimal("0.0");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMinValueZeroBorder2() {
+
+        bigDecimal = new BigDecimal("0.00000000000000");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0).maxFractionalPlaces(100)
+            .build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMinValueBorder() {
 
         bigDecimal = new BigDecimal("0.01");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(3).minValue(0.02).maxValue(
-                10).build();
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0.01).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
+        isValid(result);
     }
 
 
     @Test
-    public void isNotValidPowerPositive() {
+    public void validateMinValueOver() {
 
-        bigDecimal = new BigDecimal("1E88");
-        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().build();
+        bigDecimal = new BigDecimal("0.01");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
+        isNotValid(result, "The value 0.01 is too small. It should be greater than or equal to 1.0.");
     }
 
 
     @Test
-    public void isNotValidPowerNegative() {
+    public void validateMinValueUnder() {
+
+        bigDecimal = new BigDecimal("0.01");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(0.00).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMaxValueBorder() {
+
+        bigDecimal = new BigDecimal("123.02");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxValue(123.02).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validateMaxValueUnder() {
+
+        bigDecimal = new BigDecimal("1.00");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxValue(0.00).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isNotValid(result, "The value 1.0 is too high. It should be less than or equal to 0.0.");
+    }
+
+
+    @Test
+    public void validateMaxValueOver() {
+
+        bigDecimal = new BigDecimal("100.00");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxValue(124.12).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerOfMaxDecimalAndValueBorder() {
+
+        bigDecimal = new BigDecimal("1E8");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxValue(100000000).maxDecimalPlaces(9)
+            .build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerOfMaxDecimalUnder() {
+
+        bigDecimal = new BigDecimal("1E8");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(8).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isNotValid(result,
+            "The count of the digits before the point is out of range. It should be in the range 1 - 8 but is 9.");
+    }
+
+
+    @Test
+    public void validatePowerOfMaxDecimalOver() {
+
+        bigDecimal = new BigDecimal("1E8");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(10).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerOfMinDecimalAndValueBorder() {
+
+        bigDecimal = new BigDecimal("1E2");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(100).maxDecimalPlaces(3).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerOfMinDecimalUnder() {
+
+        bigDecimal = new BigDecimal("1E3");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(2).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerOfMinDecimalOver() {
+
+        bigDecimal = new BigDecimal("1E2");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(4).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isNotValid(result,
+            "The count of the digits before the point is out of range. It should be in the range 4 - 10 but is 3.");
+    }
+
+
+    @Test
+    public void validatePowerNegativeMaxFractionsBorder() {
+
+        bigDecimal = new BigDecimal("1E-88");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(88).build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
+    }
+
+
+    @Test
+    public void validatePowerNegativeMaxFractionsOver() {
 
         bigDecimal = new BigDecimal("1E-88");
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        assertThat(result.isValid(), is(false));
+        isNotValid(result,
+            "The count of the digits after the point is too high. It should be less than or equal to 2 but is 88.");
+    }
+
+
+    @Test
+    public void validatePowerNegativeMaxFractionsUnder() {
+
+        bigDecimal = new BigDecimal("1E-1");
+        bigDecimalValidationRules = new BigDecimalValidationRules.Builder().build();
+
+        BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
+        isValid(result);
     }
 
 
@@ -267,5 +360,19 @@ public class BigDecimalValidatorUnitTest {
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
         assertThat(result.isValid(), is(true));
+    }
+
+
+    private void isValid(BigDecimalValidationResult result) {
+
+        assertThat(result.isValid(), is(true));
+        assertThat(result.getFailMessage(), isEmptyOrNullString());
+    }
+
+
+    private void isNotValid(BigDecimalValidationResult result, String expectedFailureMessage) {
+
+        assertThat(result.isValid(), is(false));
+        assertThat(result.getFailMessage(), is(expectedFailureMessage));
     }
 }
