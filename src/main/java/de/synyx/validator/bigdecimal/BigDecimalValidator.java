@@ -29,9 +29,7 @@ import static java.lang.Math.abs;
  */
 public class BigDecimalValidator {
 
-    private BigDecimalValidationResult result;
-
-    private boolean checkFractions;
+    private final boolean checkFractions;
 
     /**
      * BigDecimalValidator instance which allows fractionals by default.
@@ -62,9 +60,8 @@ public class BigDecimalValidator {
     public BigDecimalValidationResult validate(BigDecimal bigDecimal,
         BigDecimalValidationRules bigDecimalValidationRules) {
 
-        result = new BigDecimalValidationResult();
-
-        BigDecimal thisBigDecimal = parse(bigDecimal);
+        BigDecimalValidationResult result = new BigDecimalValidationResult();
+        BigDecimal thisBigDecimal = parse(bigDecimal, result);
 
         // return result after parsing errors
         if (!result.isValid()) {
@@ -77,19 +74,19 @@ public class BigDecimalValidator {
                         BigInteger.TEN.pow(abs(thisBigDecimal.scale()))));
         }
 
-        if (isDecimalInRange(thisBigDecimal, bigDecimalValidationRules)) {
+        if (isDecimalOutOfRange(thisBigDecimal, bigDecimalValidationRules, result)) {
             return result;
         }
 
-        if (checkFractions && isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
+        if (checkFractions && isFractionalOutOfRange(thisBigDecimal, bigDecimalValidationRules, result)) {
             return result;
         }
 
-        if (isTooBig(thisBigDecimal, bigDecimalValidationRules)) {
+        if (isTooBig(thisBigDecimal, bigDecimalValidationRules, result)) {
             return result;
         }
 
-        if (isTooSmall(thisBigDecimal, bigDecimalValidationRules)) {
+        if (isTooSmall(thisBigDecimal, bigDecimalValidationRules, result)) {
             return result;
         }
 
@@ -104,7 +101,7 @@ public class BigDecimalValidator {
      *
      * @return  parsed <code>BigDecimal</code>
      */
-    private BigDecimal parse(BigDecimal bigDecimal) {
+    private BigDecimal parse(BigDecimal bigDecimal, BigDecimalValidationResult result) {
 
         BigDecimal thisBigDecimal = bigDecimal;
 
@@ -128,7 +125,8 @@ public class BigDecimalValidator {
      *
      * @return  true if is is out of range, else otherwise
      */
-    private boolean isDecimalInRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
+    private boolean isDecimalOutOfRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules,
+        BigDecimalValidationResult result) {
 
         int actualScale = bigDecimal.scale();
         int actualPrecision = bigDecimal.precision();
@@ -160,7 +158,8 @@ public class BigDecimalValidator {
      *
      * @return  true if is is out of range, else otherwise
      */
-    private boolean isFractionalInRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
+    private boolean isFractionalOutOfRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules,
+        BigDecimalValidationResult result) {
 
         int actualFractionalPlaces = bigDecimal.scale();
 
@@ -184,7 +183,8 @@ public class BigDecimalValidator {
      *
      * @return  true if is is too big, else otherwise
      */
-    private boolean isTooBig(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
+    private boolean isTooBig(BigDecimal bigDecimal, BigDecimalValidationRules validationRules,
+        BigDecimalValidationResult result) {
 
         if (bigDecimal.compareTo(validationRules.getMaxValue()) > 0) {
             result.setFailMessage("The value " + bigDecimal.doubleValue()
@@ -206,7 +206,8 @@ public class BigDecimalValidator {
      *
      * @return  true if is is too small, else otherwise
      */
-    private boolean isTooSmall(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
+    private boolean isTooSmall(BigDecimal bigDecimal, BigDecimalValidationRules validationRules,
+        BigDecimalValidationResult result) {
 
         if (bigDecimal.compareTo(validationRules.getMinValue()) < 0) {
             result.setFailMessage("The value " + bigDecimal.doubleValue()
