@@ -1,4 +1,4 @@
-package de.synyx.validator.bigdecimal;
+package org.synyx.validation.bigdecimal;
 
 import org.junit.Before;
 import org.junit.Test;

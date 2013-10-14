@@ -1,4 +1,4 @@
-package de.synyx.validator.bigdecimal;
+package org.synyx.validation.bigdecimal;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
