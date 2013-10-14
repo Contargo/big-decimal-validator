@@ -50,7 +50,7 @@ public final class BigDecimalValidationRules {
     private final BigDecimal minValue;
     private final BigDecimal maxValue;
 
-    private BigDecimalValidationRules(Builder builder) {
+    public BigDecimalValidationRules(Builder builder) {
 
         minDecimalPlaces = builder.minDecimalPlaces;
         maxDecimalPlaces = builder.maxDecimalPlaces;
@@ -88,6 +88,9 @@ public final class BigDecimalValidationRules {
         return maxValue;
     }
 
+    /**
+     * Builder class to build a {@link BigDecimalValidationRules} object with predefined attributes.
+     */
     public static class Builder {
 
         private static final int MAX_DECIMAL_PLACES = 10;

@@ -9,46 +9,27 @@ import static java.lang.Math.abs;
 /**
  * <p>Validates a BigDecimal by minValue, maxValue value and the count of the fraction and decimal places.</p>
  *
+ * <p>This validator provides various numbers of validation methods to validate a {@link BigDecimal} by the given
+ * {@link BigDecimalValidationRules}.</p>
+ *
+ * <pre>
+ Example:
+
+ BigDecimal bigDecimal = new BigDecimal("124.2");
+ BigDecimalValidationRules bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(1)
+    .maxDecimalPlaces(3).macFractionalPlaces(2).minValue("0").maxValue(150).build();
+
+ BigDecimalValidationResult result = bigDecimalValidator.validate(bigDecimal, bigDecimalValidationRules);
+
+ ...
+ }
+ * </pre>
+ *
  * @author  Tobias Schneider - schneider@synyx.de
  */
 public class BigDecimalValidator {
 
     private BigDecimalValidationResult result;
-
-    private boolean strict = false;
-    private boolean allowFractions = true;
-
-    /**
-     * Returns a strict singleton instance.
-     */
-    public BigDecimalValidator() {
-
-        this(true);
-    }
-
-
-    /**
-     * Returns a strict or non strict singleton instance.
-     *
-     * @param  strict  precicion of BigDecimal
-     */
-    public BigDecimalValidator(boolean strict) {
-
-        this(strict, true);
-    }
-
-
-    /**
-     * Returns a singleton instance.
-     *
-     * @param  strict  <code>true</code> if strict parsing should be used.
-     * @param  allowFractions  <code>true</code> if fractions should be checked at validation time.
-     */
-    public BigDecimalValidator(boolean strict, boolean allowFractions) {
-
-        this.strict = strict;
-        this.allowFractions = allowFractions;
-    }
 
     /**
      * Validates a BigDecimal by the given validation rules..
@@ -79,7 +60,7 @@ public class BigDecimalValidator {
             return result;
         }
 
-        if (allowFractions && isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
+        if (isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
             return result;
         }
 
@@ -104,21 +85,11 @@ public class BigDecimalValidator {
      */
     private BigDecimal parse(BigDecimal bigDecimal) {
 
-        BigDecimal thisBigDecimal = bigDecimal;
-
-        if (thisBigDecimal == null) {
+        if (bigDecimal == null) {
             result.setFailMessage("Cannot parse null value.");
-        } else {
-            if (!allowFractions) {
-                thisBigDecimal = new BigDecimal(bigDecimal.intValue());
-            }
-
-            if (strict) {
-                thisBigDecimal = new BigDecimal(bigDecimal.toString());
-            }
         }
 
-        return thisBigDecimal;
+        return bigDecimal;
     }
 
 
@@ -126,11 +97,11 @@ public class BigDecimalValidator {
      * Checks for range of decimal.
      *
      * @param  bigDecimal  object to test
-     * @param  bigDecimalValidationRules
+     * @param  validationRules  keeps the validation rules
      *
      * @return  true if is is out of range, else otherwise
      */
-    private boolean isDecimalInRange(BigDecimal bigDecimal, BigDecimalValidationRules bigDecimalValidationRules) {
+    private boolean isDecimalInRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
 
         int actualScale = bigDecimal.scale();
         int actualPrecision = bigDecimal.precision();
@@ -141,11 +112,10 @@ public class BigDecimalValidator {
 
         int actualDecimalPlaces = actualPrecision - actualScale;
 
-        if (actualDecimalPlaces < bigDecimalValidationRules.getMinDecimalPlaces()
-                || actualDecimalPlaces > bigDecimalValidationRules.getMaxDecimalPlaces()) {
+        if (actualDecimalPlaces < validationRules.getMinDecimalPlaces()
+                || actualDecimalPlaces > validationRules.getMaxDecimalPlaces()) {
             result.setFailMessage("The count of the digits before the point is out of range. It should be in the range "
-                + bigDecimalValidationRules.getMinDecimalPlaces() + " - "
-                + bigDecimalValidationRules.getMaxDecimalPlaces()
+                + validationRules.getMinDecimalPlaces() + " - " + validationRules.getMaxDecimalPlaces()
                 + " but is " + actualDecimalPlaces + ".");
 
             return true;
@@ -159,18 +129,18 @@ public class BigDecimalValidator {
      * Checks for range of fractionals.
      *
      * @param  bigDecimal  object to test
-     * @param  bigDecimalValidationRules
+     * @param  validationRules  keeps the validation rules
      *
      * @return  true if is is out of range, else otherwise
      */
-    private boolean isFractionalInRange(BigDecimal bigDecimal, BigDecimalValidationRules bigDecimalValidationRules) {
+    private boolean isFractionalInRange(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
 
         int actualFractionalPlaces = bigDecimal.scale();
 
-        if (actualFractionalPlaces > bigDecimalValidationRules.getMaxFractionalPlaces()) {
+        if (actualFractionalPlaces > validationRules.getMaxFractionalPlaces()) {
             result.setFailMessage(
                 "The count of the digits after the point is too high. It should be less than or equal to "
-                + bigDecimalValidationRules.getMaxFractionalPlaces() + " but is " + actualFractionalPlaces + ".");
+                + validationRules.getMaxFractionalPlaces() + " but is " + actualFractionalPlaces + ".");
 
             return true;
         }
@@ -183,16 +153,16 @@ public class BigDecimalValidator {
      * Checks if the value of the BigDecimal is greater than the given maximum.
      *
      * @param  bigDecimal  object to test
-     * @param  bigDecimalValidationRules
+     * @param  validationRules  keeps the validation rules
      *
      * @return  true if is is too big, else otherwise
      */
-    private boolean isTooBig(BigDecimal bigDecimal, BigDecimalValidationRules bigDecimalValidationRules) {
+    private boolean isTooBig(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
 
-        if (bigDecimal.compareTo(bigDecimalValidationRules.getMaxValue()) > 0) {
+        if (bigDecimal.compareTo(validationRules.getMaxValue()) > 0) {
             result.setFailMessage("The value " + bigDecimal.doubleValue()
-                + " is too high. It should be less than or equal to "
-                + bigDecimalValidationRules.getMaxValue().doubleValue() + ".");
+                + " is too high. It should be less than or equal to " + validationRules.getMaxValue().doubleValue()
+                + ".");
 
             return true;
         }
@@ -205,16 +175,16 @@ public class BigDecimalValidator {
      * Checks if the value of the BigDecimal is less than the given minimum.
      *
      * @param  bigDecimal  object to test
-     * @param  bigDecimalValidationRules
+     * @param  validationRules  keeps the validation rules
      *
      * @return  true if is is too small, else otherwise
      */
-    private boolean isTooSmall(BigDecimal bigDecimal, BigDecimalValidationRules bigDecimalValidationRules) {
+    private boolean isTooSmall(BigDecimal bigDecimal, BigDecimalValidationRules validationRules) {
 
-        if (bigDecimal.compareTo(bigDecimalValidationRules.getMinValue()) < 0) {
+        if (bigDecimal.compareTo(validationRules.getMinValue()) < 0) {
             result.setFailMessage("The value " + bigDecimal.doubleValue()
-                + " is too small. It should be greater than or equal to "
-                + bigDecimalValidationRules.getMinValue().doubleValue() + ".");
+                + " is too small. It should be greater than or equal to " + validationRules.getMinValue().doubleValue()
+                + ".");
 
             return true;
         }
