@@ -36,19 +36,20 @@ public class BigDecimalValidator {
      *
      * @param  bigDecimal  object to test
      *
-     * @return  Resultobject with failure message
+     * @return  {@link BigDecimalValidationResult} object with failure message
      */
     public BigDecimalValidationResult validate(BigDecimal bigDecimal,
         BigDecimalValidationRules bigDecimalValidationRules) {
 
         result = new BigDecimalValidationResult();
 
-        BigDecimal thisBigDecimal = parse(bigDecimal);
+        if (bigDecimal == null) {
+            result.setFailMessage("Cannot parse null value.");
 
-        // return result after parsing errors
-        if (!result.isValid()) {
             return result;
         }
+
+        BigDecimal thisBigDecimal = bigDecimal;
 
         // calculate number if BigDecimal is set by power of x (e.g.: 1E88)
         if (thisBigDecimal.scale() < 0) {
@@ -73,23 +74,6 @@ public class BigDecimalValidator {
         }
 
         return result;
-    }
-
-
-    /**
-     * Parse the <code>BigDecimal</code> with the given options.
-     *
-     * @param  bigDecimal  <code>BigDecimal</code> to parse.
-     *
-     * @return  parsed <code>BigDecimal</code>
-     */
-    private BigDecimal parse(BigDecimal bigDecimal) {
-
-        if (bigDecimal == null) {
-            result.setFailMessage("Cannot parse null value.");
-        }
-
-        return bigDecimal;
     }
 
 
