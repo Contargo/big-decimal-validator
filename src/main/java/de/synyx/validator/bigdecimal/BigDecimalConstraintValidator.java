@@ -20,8 +20,8 @@ public final class BigDecimalConstraintValidator implements ConstraintValidator<
     private long maxDecimalPlaces;
     private long minDecimalPlaces;
     private long maxFractionalPlaces;
-    private Double minValue;
-    private Double maxValue;
+    private double minValue;
+    private double maxValue;
 
     private BigDecimalValidator bigDecimalValidator;
 
@@ -49,7 +49,7 @@ public final class BigDecimalConstraintValidator implements ConstraintValidator<
 
             BigDecimalValidationRules bigDecimalValidationRules = new BigDecimalValidationRules.Builder()
                 .maxDecimalPlaces(maxDecimalPlaces).minDecimalPlaces(minDecimalPlaces).maxFractionalPlaces(
-                    maxFractionalPlaces).minValue(minValue.toString()).maxValue(maxValue.toString()).build();
+                    maxFractionalPlaces).minValue(minValue).maxValue(maxValue).build();
 
             BigDecimalValidationResult result = bigDecimalValidator.validate(bigDecimal, bigDecimalValidationRules);
 

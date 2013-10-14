@@ -128,17 +128,17 @@ public final class BigDecimalValidationRules {
         }
 
 
-        public Builder minValue(String minValue) {
+        public Builder minValue(double minValue) {
 
-            this.minValue = new BigDecimal(minValue);
+            this.minValue = new BigDecimal(String.valueOf(minValue));
 
             return this;
         }
 
 
-        public Builder maxValue(String maxValue) {
+        public Builder maxValue(double maxValue) {
 
-            this.maxValue = new BigDecimal(maxValue);
+            this.maxValue = new BigDecimal(String.valueOf(maxValue));
 
             return this;
         }

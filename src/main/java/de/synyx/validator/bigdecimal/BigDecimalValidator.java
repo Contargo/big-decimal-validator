@@ -31,7 +31,7 @@ public class BigDecimalValidator {
 
     private BigDecimalValidationResult result;
 
-    private boolean allowFractions;
+    private boolean checkFractions;
 
     /**
      * BigDecimalValidator instance which allows fractionals by default.
@@ -45,11 +45,11 @@ public class BigDecimalValidator {
     /**
      * BigDecimalValidator instance with or without fractional checks.
      *
-     * @param  allowFractions  <code>true</code> if fractional checks are enabled
+     * @param  checkFractions  <code>true</code> if fractional checks are enabled
      */
-    public BigDecimalValidator(boolean allowFractions) {
+    public BigDecimalValidator(boolean checkFractions) {
 
-        this.allowFractions = allowFractions;
+        this.checkFractions = checkFractions;
     }
 
     /**
@@ -81,7 +81,7 @@ public class BigDecimalValidator {
             return result;
         }
 
-        if (allowFractions && isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
+        if (checkFractions && isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
             return result;
         }
 
@@ -111,7 +111,7 @@ public class BigDecimalValidator {
         if (thisBigDecimal == null) {
             result.setFailMessage("Cannot parse null value.");
         } else {
-            if (!allowFractions) {
+            if (!checkFractions) {
                 thisBigDecimal = new BigDecimal(bigDecimal.intValue());
             }
         }
