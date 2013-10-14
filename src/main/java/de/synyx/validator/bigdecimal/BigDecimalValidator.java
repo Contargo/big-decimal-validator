@@ -31,6 +31,27 @@ public class BigDecimalValidator {
 
     private BigDecimalValidationResult result;
 
+    private boolean allowFractions;
+
+    /**
+     * BigDecimalValidator instance which allows fractionals by default.
+     */
+    public BigDecimalValidator() {
+
+        this(true);
+    }
+
+
+    /**
+     * BigDecimalValidator instance with or without fractional checks.
+     *
+     * @param  allowFractions  <code>true</code> if fractional checks are enabled
+     */
+    public BigDecimalValidator(boolean allowFractions) {
+
+        this.allowFractions = allowFractions;
+    }
+
     /**
      * Validates a BigDecimal by the given validation rules..
      *
@@ -43,13 +64,12 @@ public class BigDecimalValidator {
 
         result = new BigDecimalValidationResult();
 
-        if (bigDecimal == null) {
-            result.setFailMessage("Cannot parse null value.");
+        BigDecimal thisBigDecimal = parse(bigDecimal);
 
+        // return result after parsing errors
+        if (!result.isValid()) {
             return result;
         }
-
-        BigDecimal thisBigDecimal = bigDecimal;
 
         // calculate number if BigDecimal is set by power of x (e.g.: 1E88)
         if (thisBigDecimal.scale() < 0) {
@@ -61,7 +81,7 @@ public class BigDecimalValidator {
             return result;
         }
 
-        if (isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
+        if (allowFractions && isFractionalInRange(thisBigDecimal, bigDecimalValidationRules)) {
             return result;
         }
 
@@ -74,6 +94,29 @@ public class BigDecimalValidator {
         }
 
         return result;
+    }
+
+
+    /**
+     * Parse the <code>BigDecimal</code> with the given options.
+     *
+     * @param  bigDecimal  <code>BigDecimal</code> to parse.
+     *
+     * @return  parsed <code>BigDecimal</code>
+     */
+    private BigDecimal parse(BigDecimal bigDecimal) {
+
+        BigDecimal thisBigDecimal = bigDecimal;
+
+        if (thisBigDecimal == null) {
+            result.setFailMessage("Cannot parse null value.");
+        } else {
+            if (!allowFractions) {
+                thisBigDecimal = new BigDecimal(bigDecimal.intValue());
+            }
+        }
+
+        return thisBigDecimal;
     }
 
 
