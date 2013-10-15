@@ -13,7 +13,6 @@ import javax.validation.ConstraintValidatorContext;
  * <p>Use this Validator with the supported annotation {@link BigDecimalValidate}</p>
  *
  * @author  Tobias Schneider - schneider@synyx.de
- * @author  Oliver Messner - messner@synyx.de
  */
 public final class BigDecimalConstraintValidator implements ConstraintValidator<BigDecimalValidate, Object> {
 

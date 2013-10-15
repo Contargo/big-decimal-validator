@@ -5,11 +5,40 @@
     
     <groupId>org.synyx</groupId>
     <artifactId>validation</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     
-    <version>1.0-SNAPSHOT</version>
-    
     <name>Validation</name>
+
+    <description>
+        Small library for validation issues.
+    </description>
+    
+    <organization>
+        <name>synyx GmbH &amp; Co. KG</name>
+        <url>http://www.synyx.de</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>Tobsch</id>
+            <name>Tobias Schneider</name>
+            <email>schneider@synyx.de</email>
+            <roles>
+                <role>Project Lead</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
     
     <dependencies>
         <dependency>
