@@ -40,6 +40,12 @@
         </developer>
     </developers>
 
+    <scm>
+        <url>http://git.synyx.de/validation.git</url>
+        <connection>scm:git:ssh://git@git.synyx.de/validation.git</connection>
+        <developerConnection>scm:git:ssh://git@git.synyx.de/validation.git</developerConnection>
+    </scm>
+    
     <distributionManagement>
         <repository>
             <id>releases.nexus.synyx.de</id>
