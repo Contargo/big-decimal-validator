@@ -2,7 +2,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>org.synyx</groupId>
+    <groupId>net.contargo</groupId>
     <artifactId>validation</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -14,30 +14,9 @@
     </description>
     
     <organization>
-        <name>synyx GmbH &amp; Co. KG</name>
-        <url>http://www.synyx.de</url>
+        <name>Contargo GmbH &amp; Co. KG</name>
+        <url>http://www.contargo.net</url>
     </organization>
-
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>Tobsch</id>
-            <name>Tobias Schneider</name>
-            <email>schneider@synyx.de</email>
-            <roles>
-                <role>Project Lead</role>
-                <role>Developer</role>
-            </roles>
-        </developer>
-    </developers>
 
     <scm>
         <url>http://git.synyx.de/validation.git</url>
