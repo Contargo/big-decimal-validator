@@ -1,4 +1,4 @@
-package org.synyx.validation.bigdecimal;
+package net.contargo.validation.bigdecimal;
 
 /**
  * Resultobject of the {@link BigDecimalValidator}.

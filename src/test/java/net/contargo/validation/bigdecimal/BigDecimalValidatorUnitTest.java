@@ -1,4 +1,4 @@
-package org.synyx.validation.bigdecimal;
+package net.contargo.validation.bigdecimal;
 
 import org.junit.Before;
 import org.junit.Test;

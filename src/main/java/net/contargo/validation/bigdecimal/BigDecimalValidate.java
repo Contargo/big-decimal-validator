@@ -1,4 +1,4 @@
-package org.synyx.validation.bigdecimal;
+package net.contargo.validation.bigdecimal;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
