@@ -30,11 +30,11 @@ public class BigDecimalValidatorUnitTest {
 
     private BigDecimalValidator sut;
 
-    private BigDecimal bigDecimal;
-    private BigDecimalValidationRules bigDecimalValidationRules;
-
     @Mock
     private ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilderMock;
+
+    private BigDecimal bigDecimal;
+    private BigDecimalValidationRules bigDecimalValidationRules;
 
     @Before
     public void setUp() {

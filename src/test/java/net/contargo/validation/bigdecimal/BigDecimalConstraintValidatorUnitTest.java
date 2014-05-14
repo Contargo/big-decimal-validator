@@ -34,9 +34,6 @@ public class BigDecimalConstraintValidatorUnitTest {
 
     private BigDecimalConstraintValidator sut;
 
-    private BigDecimal bigDecimal;
-    private BigDecimalValidationResult result;
-
     @Mock
     private BigDecimalValidator bigDecimalValidatorMock;
     @Mock
@@ -45,6 +42,9 @@ public class BigDecimalConstraintValidatorUnitTest {
     private ConstraintValidatorContext constraintValidatorContextMock;
     @Mock
     private ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilderMock;
+
+    private BigDecimal bigDecimal;
+    private BigDecimalValidationResult result;
 
     @Before
     public void setUp() {
