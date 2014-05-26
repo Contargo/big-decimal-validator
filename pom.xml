@@ -40,9 +40,9 @@
     </developers>
 
     <scm>
-        <url>http://git.synyx.de/validation.git</url>
-        <connection>scm:git:ssh://git@git.synyx.de/validation.git</connection>
-        <developerConnection>scm:git:ssh://git@git.synyx.de/validation.git</developerConnection>
+        <url>https://github.com/contargo/validation</url>
+        <connection>scm:git:git://github.com/contargo/validation.git</connection>
+        <developerConnection>scm:git:git@github.com:contargo/validation.git</developerConnection>
     </scm>
 
     <distributionManagement>
