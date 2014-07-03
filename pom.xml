@@ -47,12 +47,12 @@
 
     <distributionManagement>
         <repository>
-            <id>releases.nexus.synyx.de</id>
-            <url>http://nexus.synyx.de/content/repositories/releases</url>
+            <id>releases.nexus.contargo.de</id>
+            <url>http://nexus.contargo.localdomain/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots.nexus.synyx.de</id>
-            <url>http://nexus.synyx.de/content/repositories/snapshots</url>
+            <id>snapshots.nexus.contargo.de</id>
+            <url>http://nexus.contargo.localdomain/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
