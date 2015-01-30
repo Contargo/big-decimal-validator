@@ -1,7 +1,7 @@
 package net.contargo.validation.bigdecimal;
 
 /**
- * Resultobject of the {@link BigDecimalValidator}.
+ * Resultobject of the {@link net.contargo.validation.bigdecimal.BigDecimalValidator BigDecimalValidator}.
  *
  * <p>If failMessage is set a error has occured.</p>
  *

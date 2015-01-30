@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 
 /**
- * UnitTest of {@link BigDecimalConstraintValidator}.
+ * UnitTest of {@link net.contargo.validation.bigdecimal.BigDecimalConstraintValidator BigDecimalConstraintValidator}.
  *
  * @author  Tobias Schneider - schneider@synyx.de
  */

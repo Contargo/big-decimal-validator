@@ -8,9 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * BigDecimal Validator to validate a BigDecimal by his maximum and minimum precision and maxFractionalPlaces. Because
- * the annotation {@link javax.validation.constraints.Digits} can only take longs and no floatingnumbers.
+ * the annotation {@link javax.validation.constraints.Digits Digits} can only take longs and no floatingnumbers.
  *
- * <p>Use this Validator with the supported annotation {@link BigDecimalValidate}</p>
+ * <p>Use this Validator with the supported annotation
+ * {@link net.contargo.validation.bigdecimal.BigDecimalValidate BigDecimalValidate}</p>
  *
  * @author  Tobias Schneider - schneider@synyx.de
  */

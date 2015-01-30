@@ -21,7 +21,7 @@ import static org.hamcrest.text.IsEmptyString.isEmptyOrNullString;
 
 
 /**
- * Unittest of {@link BigDecimalConstraintValidator}.
+ * Unittest of {@link net.contargo.validation.bigdecimal.BigDecimalConstraintValidator BigDecimalConstraintValidator}.
  *
  * @author  Tobias Schneider - schneider@synyx.de
  */

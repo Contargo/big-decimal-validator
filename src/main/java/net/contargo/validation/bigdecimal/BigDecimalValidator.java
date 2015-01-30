@@ -9,8 +9,9 @@ import static java.lang.Math.abs;
 /**
  * <p>Validates a BigDecimal by minValue, maxValue value and the count of the fraction and decimal places.</p>
  *
- * <p>This validator provides various numbers of validation methods to validate a {@link BigDecimal} by the given
- * {@link BigDecimalValidationRules}.</p>
+ * <p>This validator provides various numbers of validation methods to validate a
+ * {@link java.math.BigDecimal BigDecimal} by the given
+ * {@link net.contargo.validation.bigdecimal.BigDecimalValidationRules BigDecimalValidationRules}.</p>
  *
  * <pre>
  Example:
@@ -55,7 +56,8 @@ public class BigDecimalValidator {
      *
      * @param  bigDecimal  object to test
      *
-     * @return  {@link BigDecimalValidationResult} object with failure message
+     * @return  {@link net.contargo.validation.bigdecimal.BigDecimalValidationResult BigDecimalValidationResult} object
+     *          with failure message
      */
     public BigDecimalValidationResult validate(BigDecimal bigDecimal,
         BigDecimalValidationRules bigDecimalValidationRules) {
