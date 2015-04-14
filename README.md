@@ -1,7 +1,7 @@
-Validation
+BigDecimal Validator
 =========
 
-Validation is a small library for validation purposes.
+The BigDecimal Validator is a small library to validate java.math.BigDecimal
 
 # Features
 * Validation of BigDecimals via Service or Annotation
@@ -65,7 +65,7 @@ public void function() {
 
 Simply clone this repository
 ```sh
-$ git clone https://github.com/Contargo/validation.git
+$ git clone https://github.com/Contargo/big-decimal-validator.git
 ```
 
 ## Build 
@@ -77,4 +77,4 @@ $ mvn clean install
 
 # License
 
-Validation is licensed under the Apache 2.0-license
+BigDecimal Validator is licensed under the Apache 2.0-license

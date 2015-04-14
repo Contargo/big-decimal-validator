@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.contargo</groupId>
-    <artifactId>validation</artifactId>
+    <artifactId>big-decimal-validator</artifactId>
     <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
 
-    <description>Validation is a small library for validation purposes</description>
-    <url>https://github.com/Contargo/validation</url>
+    <description>The BigDecimal Validator is a small library to validate java.math.BigDecimal</description>
+    <url>https://github.com/Contargo/big-decimal-validator</url>
 
     <licenses>
         <license>
@@ -37,11 +37,11 @@
     </developers>
 
     <scm>
-        <url>https://github.com/contargo/validation</url>
-        <connection>scm:git:git://github.com/contargo/validation.git</connection>
-        <developerConnection>scm:git:git@github.com:contargo/validation.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <url>https://github.com/contargo/big-decimal-validator</url>
+        <connection>scm:git:git://github.com/contargo/big-decimal-validator.git</connection>
+        <developerConnection>scm:git:git@github.com:contargo/big-decimal-validator.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
