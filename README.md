@@ -11,7 +11,7 @@ The BigDecimal Validator is a small library to validate java.math.BigDecimal
 
 #Prerequisites
  - Maven 3 or higher
- - JDK 7 or higher
+ - JDK 8 or higher
 
 ## Examples
 
