@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Contargo/big-decimal-validator.svg?branch=master)](https://travis-ci.org/Contargo/big-decimal-validator)
+
 BigDecimal Validator
 =========
 
