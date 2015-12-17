@@ -19,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.mockito.Matchers.any;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -97,6 +98,28 @@ public class BigDecimalConstraintValidatorUnitTest {
         verify(constraintValidatorContextMock).disableDefaultConstraintViolation();
         verify(constraintValidatorContextMock).buildConstraintViolationWithTemplate(any(String.class));
         verify(constraintViolationBuilderMock).addConstraintViolation();
+    }
+
+
+    @Test
+    public void isNotValidWithoutconstraintValidatorContext() {
+
+        result.setFailMessage("FAIL!");
+
+        bigDecimal = new BigDecimal("0.00");
+
+        when(bigDecimalValidatorMock.validate(any(BigDecimal.class), any(BigDecimalValidationRules.class))).thenReturn(
+            result);
+
+        initializeValidationRules(1L, 10L, 2L, 0.00, 10.0);
+
+        sut.setBigDecimalValidator(bigDecimalValidatorMock);
+
+        assertThat(sut.isValid(bigDecimal, null), is(false));
+
+        verify(constraintValidatorContextMock, never()).disableDefaultConstraintViolation();
+        verify(constraintValidatorContextMock, never()).buildConstraintViolationWithTemplate(any(String.class));
+        verify(constraintViolationBuilderMock, never()).addConstraintViolation();
     }
 
 
