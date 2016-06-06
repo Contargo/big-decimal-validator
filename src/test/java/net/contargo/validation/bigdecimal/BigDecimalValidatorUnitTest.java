@@ -72,8 +72,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits before the point is out of range. It should be in the range 1 - 1 but is 2.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.decimaloutofrange}");
     }
 
 
@@ -95,8 +94,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(4).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits before the point is out of range. It should be in the range 4 - 10 but is 3.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.decimaloutofrange}");
     }
 
 
@@ -140,8 +138,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxFractionalPlaces(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits after the point is too high. It should be less than or equal to 1 but is 2.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.fractionaloutofrange}");
     }
 
 
@@ -186,7 +183,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minValue(1).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result, "The value 0.01 is too small. It should be greater than or equal to 1.0.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.toosmall}");
     }
 
 
@@ -219,7 +216,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxValue(0.00).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result, "The value 1.0 is too high. It should be less than or equal to 0.0.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.toobig}");
     }
 
 
@@ -253,8 +250,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().maxDecimalPlaces(8).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits before the point is out of range. It should be in the range 1 - 8 but is 9.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.decimaloutofrange}");
     }
 
 
@@ -298,8 +294,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().minDecimalPlaces(4).build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits before the point is out of range. It should be in the range 4 - 10 but is 3.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.decimaloutofrange}");
     }
 
 
@@ -321,8 +316,7 @@ public class BigDecimalValidatorUnitTest {
         bigDecimalValidationRules = new BigDecimalValidationRules.Builder().build();
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
-        isNotValid(result,
-            "The count of the digits after the point is too high. It should be less than or equal to 2 but is 88.");
+        isNotValid(result, "{net.contargo.validation.bigdecimal.fractionaloutofrange}");
     }
 
 
@@ -345,7 +339,7 @@ public class BigDecimalValidatorUnitTest {
 
         BigDecimalValidationResult result = sut.validate(bigDecimal, bigDecimalValidationRules);
         assertThat(result.isValid(), is(false));
-        assertThat(result.getFailMessage(), is("Cannot parse null value."));
+        assertThat(result.getFailMessage(), is("{net.contargo.validation.bigdecimal.null}"));
     }
 
 
