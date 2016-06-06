@@ -72,8 +72,8 @@ public class BigDecimalValidator {
 
         // calculate number if BigDecimal is set by power of x (e.g.: 1E88)
         if (thisBigDecimal.scale() < 0) {
-            thisBigDecimal = new BigDecimal(thisBigDecimal.unscaledValue().multiply(
-                        BigInteger.TEN.pow(abs(thisBigDecimal.scale()))));
+            thisBigDecimal = new BigDecimal(thisBigDecimal.unscaledValue()
+                    .multiply(BigInteger.TEN.pow(abs(thisBigDecimal.scale()))));
         }
 
         if (isDecimalOutOfRange(thisBigDecimal, bigDecimalValidationRules, result)) {
@@ -108,7 +108,7 @@ public class BigDecimalValidator {
         BigDecimal thisBigDecimal = bigDecimal;
 
         if (thisBigDecimal == null) {
-            result.setFailMessage("Cannot parse null value.");
+            result.setFailMessage("{net.contargo.validation.bigdecimal.null}");
         } else {
             if (!checkFractions) {
                 thisBigDecimal = new BigDecimal(bigDecimal.intValue());
@@ -141,9 +141,7 @@ public class BigDecimalValidator {
 
         if (actualDecimalPlaces < validationRules.getMinDecimalPlaces()
                 || actualDecimalPlaces > validationRules.getMaxDecimalPlaces()) {
-            result.setFailMessage("The count of the digits before the point is out of range. It should be in the range "
-                + validationRules.getMinDecimalPlaces() + " - " + validationRules.getMaxDecimalPlaces()
-                + " but is " + actualDecimalPlaces + ".");
+            result.setFailMessage("{net.contargo.validation.bigdecimal.decimaloutofrange}");
 
             return true;
         }
@@ -166,9 +164,7 @@ public class BigDecimalValidator {
         int actualFractionalPlaces = bigDecimal.scale();
 
         if (actualFractionalPlaces > validationRules.getMaxFractionalPlaces()) {
-            result.setFailMessage(
-                "The count of the digits after the point is too high. It should be less than or equal to "
-                + validationRules.getMaxFractionalPlaces() + " but is " + actualFractionalPlaces + ".");
+            result.setFailMessage("{net.contargo.validation.bigdecimal.fractionaloutofrange}");
 
             return true;
         }
@@ -189,9 +185,7 @@ public class BigDecimalValidator {
         BigDecimalValidationResult result) {
 
         if (bigDecimal.compareTo(validationRules.getMaxValue()) > 0) {
-            result.setFailMessage("The value " + bigDecimal.doubleValue()
-                + " is too high. It should be less than or equal to " + validationRules.getMaxValue().doubleValue()
-                + ".");
+            result.setFailMessage("{net.contargo.validation.bigdecimal.toobig}");
 
             return true;
         }
@@ -212,9 +206,7 @@ public class BigDecimalValidator {
         BigDecimalValidationResult result) {
 
         if (bigDecimal.compareTo(validationRules.getMinValue()) < 0) {
-            result.setFailMessage("The value " + bigDecimal.doubleValue()
-                + " is too small. It should be greater than or equal to " + validationRules.getMinValue().doubleValue()
-                + ".");
+            result.setFailMessage("{net.contargo.validation.bigdecimal.toosmall}");
 
             return true;
         }
